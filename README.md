@@ -10,8 +10,7 @@ Movix is a web application that allows users to explore movies and TV shows, pro
 - [Technologies](#technologies)
 - [API Integration](#api-integration)
 - [Development](#development)
-- [Contributing](#contributing)
-- [License](#license)
+- [Photos](#photos)
 
 ## Installation
 
@@ -38,31 +37,34 @@ Before getting started, make sure you have Node.js and npm installed on your mac
   - Explore sections such as Similar, Popular, Trending, and Top Rated.
 
 ## Features
-    - React
-    - Redux Toolkit
-    - Vite
-    - Axios
-    - Dayjs
-    - React Router
-    - React Icons
-    - React Lazy Load Image Component
-    - React Player
-    - React Infinite Scroll Component
-    - React Select
-    - Sass
+   - React
+   - Redux Toolkit
+   - Vite
+   - Axios
+   - Dayjs
+   - React Router
+   - React Icons
+   - React Lazy Load Image Component
+   - React Player
+   - React Infinite Scroll Component
+   - React Select
+   - Sass
 
 ## API Integration
-    Movix integrates with The Movie Database (TMDB) API for fetching movie and TV show data. Ensure you have a TMDB API token and set it in the .env file as described in the installation steps.
+   Movix integrates with The Movie Database (TMDB) API for fetching movie and TV show data. Ensure you have a TMDB API token and set it in the .env file as described in the installation steps.
 
-Development
-For linting and building the project, you can use the following npm scripts:
+## Development
+   For building the project, you can use the following npm scripts:
 
-npm run lint: Run ESLint for code linting.
-npm run build: Build the project for production.
-npm run preview: Preview the production build locally.
+   - npm run build: Build the project for production.
+   - npm run preview: Preview the production build locally.
 
+## Photos
 
-
+   ![image](https://github.com/vedantgour45/movie-app/assets/113295244/81df2399-ee05-43a6-8113-bc907bf08681)
+   ![image](https://github.com/vedantgour45/movie-app/assets/113295244/d0470d31-f59e-4cf8-b939-76e7582ea51d)
+   ![image](https://github.com/vedantgour45/movie-app/assets/113295244/44d5feed-98fe-43a1-ab4b-4ad8e1994a9d)
+   ![image](https://github.com/vedantgour45/movie-app/assets/113295244/98436372-2640-4d4c-b0d4-57aa6f7adbb3)
 
 
 # React + Vite
