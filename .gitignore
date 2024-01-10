@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-.env
+
 node_modules
 dist
 dist-ssr
@@ -19,7 +19,6 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.env
 *.ntvs*
 *.njsproj
 *.sln
