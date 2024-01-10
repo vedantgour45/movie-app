@@ -14,6 +14,8 @@ const HeroBanner = () => {
 
   const { data, loading } = useFetch("/movie/popular");
 
+  console.log(data);
+
   useEffect(() => {
     const bg =
       url.backdrop +
