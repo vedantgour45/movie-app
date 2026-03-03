@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./style.scss";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
-import logo from "../../assets/movix-logo.svg";
 
 const Header = () => {
   const [show, setShow] = useState("top");
@@ -13,12 +12,30 @@ const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [query, setQuery] = useState("");
   const [showSearch, setShowSearch] = useState("");
+  const searchInputRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // When we change the page i.e the location then the next page should always start from top or else it would start from the middle whicha not a great User experience
+    if (showSearch) {
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+      }, 300); // 300ms matches the animation duration in style.scss
+    }
+  }, [showSearch]);
+
+  useEffect(() => {
+    // When we change the page i.e the location then the next page should always start from top
     window.scrollTo(0, 0);
+
+    // Keep search bar open if we are on the search page
+    if (location.pathname.startsWith("/search/")) {
+      setShowSearch(true);
+      const urlQuery = location.pathname.split("/")[2];
+      setQuery(decodeURI(urlQuery || ""));
+    } else {
+      setShowSearch(false);
+    }
   }, [location]);
 
   const controlNavbar = () => {
@@ -54,6 +71,15 @@ const Header = () => {
     setShowSearch(false);
   };
 
+  useEffect(() => {
+    if (query.trim().length > 0) {
+      const delayDebounceFn = setTimeout(() => {
+        navigate(`/search/${query}`);
+      }, 600);
+      return () => clearTimeout(delayDebounceFn);
+    }
+  }, [query]);
+
   const searchQueryHandler = (event) => {
     if (event.key === "Enter" && query.length > 0) {
       navigate(`/search/${query}`);
@@ -77,7 +103,7 @@ const Header = () => {
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
       <ContentWrapper>
         <div className="logo" onClick={() => navigate("/")}>
-          <img src={logo} alt="Movix Logo" />
+          <span className="logo-text gradient-text">MoviePulse</span>
         </div>
         <ul className="menuItems">
           <li className="menuItem" onClick={() => navigationHandler("movie")}>
@@ -86,11 +112,21 @@ const Header = () => {
           <li className="menuItem" onClick={() => navigationHandler("tv")}>
             TV Shows
           </li>
-          <li className="menuItem">
+          <li className={`searchItem ${showSearch ? "active" : ""}`}>
+            <div className="searchInput">
+              <input
+                type="text"
+                placeholder="Search..."
+                ref={searchInputRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyUp={searchQueryHandler}
+              />
+              <VscChromeClose onClick={() => setShowSearch(false)} />
+            </div>
             <HiOutlineSearch onClick={openSearch} />
           </li>
         </ul>
-
         <div className="mobileMenuItems">
           <HiOutlineSearch onClick={openSearch} />
           {mobileMenu ? (
@@ -100,22 +136,6 @@ const Header = () => {
           )}
         </div>
       </ContentWrapper>
-
-      {showSearch && (
-        <div className="searchBar">
-          <ContentWrapper>
-            <div className="searchInput">
-              <input
-                type="text"
-                placeholder="Movies, shows and more..."
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyUp={searchQueryHandler}
-              />
-              <VscChromeClose onClick={() => setShowSearch(false)} />
-            </div>
-          </ContentWrapper>
-        </div>
-      )}
     </header>
   );
 };

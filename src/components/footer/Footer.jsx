@@ -7,19 +7,13 @@ const Footer = () => {
   return (
     <footer className="footer">
       <ContentWrapper>
-        <ul className="menuItems">
-          <li className="menuItem">Terms Of Use</li>
-          <li className="menuItem">Privacy-Policy</li>
-          <li className="menuItem">About</li>
-          <li className="menuItem">Blog</li>
-          <li className="menuItem">FAQ</li>
-        </ul>
         <div className="infoText">
-          Movix is crafted with passion and powered by The Movie Database (TMDb)
-          API, ensuring an immersive cinematic experience. Discover and enjoy
-          your favorite movies and TV shows with Movix, where the magic of
-          entertainment comes to life through cutting-edge technology and a
-          user-friendly interface.
+          MoviePulse is built for movie lovers who want more than just browsing.
+          Powered by The Movie Database (TMDb) API, it delivers real-time
+          ratings, trending titles, genres, and cast insights in a sleek,
+          user-friendly experience. Discover what&apos;s hot, explore
+          what&apos;s timeless, and stay connected to the pulse of
+          entertainment.
         </div>
         <div className="creditText">
           Made by{" "}

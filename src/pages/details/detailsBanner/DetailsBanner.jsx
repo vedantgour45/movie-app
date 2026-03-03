@@ -11,6 +11,7 @@ import Img from "../../../components/lazyLoadImage/Img.jsx";
 import PosterFallback from "../../../assets/no-poster.png";
 import { PlayIcon } from "../PlayIcon.jsx";
 import VideoPopup from "../../../components/videoPopup/VideoPopup.jsx";
+import BackButton from "../../../components/backButton/BackButton";
 
 const DetailsBanner = ({ video, crew }) => {
   const [show, setShow] = useState(false);
@@ -25,7 +26,7 @@ const DetailsBanner = ({ video, crew }) => {
 
   const director = crew?.filter((f) => f.job === "Director");
   const writer = crew?.filter(
-    (f) => f.job === "Screenplay" || f.job === "Story" || f.job === "Writer"
+    (f) => f.job === "Screenplay" || f.job === "Story" || f.job === "Writer",
   );
 
   const toHoursAndMinutes = (totalMinutes) => {
@@ -46,6 +47,7 @@ const DetailsBanner = ({ video, crew }) => {
               </div>
               <div className="opacity-layer"></div>
               <ContentWrapper>
+                <BackButton location="/" />
                 <div className="content">
                   <div className="left">
                     {data.poster_path ? (
@@ -60,7 +62,7 @@ const DetailsBanner = ({ video, crew }) => {
                   <div className="right">
                     <div className="title">
                       {`${data.name || data.title} (${dayjs(
-                        data.release_date
+                        data.release_date,
                       ).format("YYYY")})`}
                     </div>
                     <div className="subtitle">{data.tagline}</div>

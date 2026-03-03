@@ -6,8 +6,9 @@
 
   .sectionHeading {
     font-size: 24px;
-    color: white;
+    color: var(--text-main);
     margin-bottom: 25px;
+    font-weight: 600;
   }
 
   .listItems {
@@ -25,7 +26,8 @@
 
     .listItem {
       text-align: center;
-      color: white;
+      color: var(--text-main);
+      transition: var(--transition-smooth);
 
       .profileImg {
         width: 125px;
@@ -33,6 +35,9 @@
         border-radius: 50%;
         overflow: hidden;
         margin-bottom: 15px;
+        border: 2px solid var(--glass-border);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        transition: var(--transition-smooth);
 
         @include md {
           width: 175px;
@@ -46,6 +51,7 @@
           object-fit: cover;
           object-position: center top;
           display: block;
+          transition: var(--transition-smooth);
         }
       }
 
@@ -54,7 +60,6 @@
         line-height: 20px;
         font-weight: 600;
         margin-bottom: 6px;
-
 
         @include md {
           font-size: 18px;
@@ -65,11 +70,22 @@
       .character {
         font-size: 14px;
         line-height: 20px;
-        opacity: 0.5;
+        color: var(--text-muted);
 
         @include md {
           font-size: 16px;
           line-height: 24px;
+        }
+      }
+
+      &:hover {
+        .profileImg {
+          border-color: var(--primary);
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px rgba(139, 92, 246, 0.3);
+          img {
+            transform: scale(1.1);
+          }
         }
       }
     }

@@ -1,13 +1,26 @@
 .genres {
   display: flex;
-  gap: 5px;
+  gap: 4px;
+  flex-wrap: wrap;
 
   .genre {
-    background-color: var(--pink);
-    color: #fff;
-    padding: 3px 5px;
-    font-size: 12px;
+    background: rgba(255, 255, 255, 0.05); /* Very subtle */
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
     border-radius: 4px;
     white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: var(--transition-smooth);
+    opacity: 0.8;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 1;
+    }
   }
 }

@@ -8,6 +8,7 @@ import MovieCard from "../../components/movieCard/MovieCard";
 import Spinner from "../../components/spinner/Spinner";
 import noResults from "../../assets/no-results.png";
 import Img from "../../components/lazyLoadImage/Img";
+import BackButton from "../../components/backButton/BackButton";
 
 const SearchResult = () => {
   const [data, setData] = useState(null);
@@ -23,7 +24,7 @@ const SearchResult = () => {
         setData(res);
         setPageNum((prevPage) => prevPage + 1);
         setLoading(false);
-      }
+      },
     );
   };
 
@@ -39,7 +40,7 @@ const SearchResult = () => {
           setData(res);
         }
         setPageNum((prevPage) => prevPage + 1);
-      }
+      },
     );
   };
 
@@ -53,6 +54,7 @@ const SearchResult = () => {
       {loading && <Spinner initial={true} />}
       {!loading && (
         <ContentWrapper>
+          <BackButton location="/" />
           {data?.results?.length > 0 ? (
             <>
               <div className="pageTitle">

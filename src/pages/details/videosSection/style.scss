@@ -6,13 +6,14 @@
 
   .sectionHeading {
     font-size: 24px;
-    color: white;
+    color: var(--text-main);
     margin-bottom: 25px;
+    font-weight: 600;
   }
 
   .errmsg {
     font-size: 14px;
-    color: rgba($color: #fff, $alpha: 0.5);
+    color: var(--text-muted);
   }
 
   .videos {
@@ -41,12 +42,14 @@
       .videoThumbnail {
         margin-bottom: 15px;
         position: relative;
+        border-radius: 12px;
+        overflow: hidden;
 
         img {
           width: 100%;
           display: block;
           border-radius: 12px;
-          transition: all 0.7s ease-in-out;
+          transition: var(--transition-smooth);
         }
 
         svg {
@@ -56,46 +59,49 @@
           transform: translate(-50%, -50%);
           width: 50px;
           height: 50px;
+          z-index: 5;
         }
 
         .triangle {
           stroke-dasharray: 240;
           stroke-dashoffset: 480;
-          stroke: white;
+          stroke: #fff;
           transform: translateY(0);
-          transition: all 0.7s ease-in-out;
+          transition: var(--transition-smooth);
         }
 
         .circle {
-          stroke: white;
+          stroke: #fff;
           stroke-dasharray: 650;
           stroke-dashoffset: 1300;
-          transition: all 0.5s ease-in-out;
+          transition: var(--transition-smooth);
         }
 
         &:hover {
           img {
-            opacity: 0.5;
+            filter: brightness(0.6);
+            transform: scale(1.05);
           }
 
           .triangle {
             stroke-dashoffset: 0;
             opacity: 1;
-            stroke: var(--pink);
+            stroke: var(--primary);
             animation: trailorPlay 0.7s ease-in-out;
           }
 
           .circle {
             stroke-dashoffset: 0;
-            stroke: var(--pink);
+            stroke: var(--primary);
           }
         }
       }
 
       .videoTitle {
-        color: white;
+        color: var(--text-main);
         font-size: 14px;
         line-height: 20px;
+        font-weight: 500;
 
         @include md {
           font-size: 16px;
