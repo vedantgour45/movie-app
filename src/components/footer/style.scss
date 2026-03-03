@@ -1,10 +1,11 @@
 @import "../../mixins.scss";
 
 .footer {
-  background-color: var(--black3);
-  padding: 50px 0;
-  color: white;
+  background-color: var(--bg-deep);
+  padding: 30px 0;
+  color: var(--text-main);
   position: relative;
+  border-top: 1px solid var(--glass-border);
 
   .contentWrapper {
     display: flex;
@@ -26,60 +27,56 @@
     }
 
     .menuItem {
-      transition: all ease 0.3s;
+      transition: var(--transition-smooth);
       cursor: pointer;
-      font-size: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
 
       @include md {
         font-size: 16px;
       }
 
       &:hover {
-        color: var(--pink);
+        color: var(--primary);
       }
     }
   }
-  
+
   .infoText {
     font-size: 14px;
-    line-height: 20px;
-    opacity: 0.5;
+    line-height: 24px;
+    color: var(--text-muted);
     text-align: center;
-    max-width: 800px;
+    max-width: 1000px;
     margin-bottom: 20px;
 
     @include md {
       font-size: 16px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
   }
 
   .creditText {
-    font-size: 8px;
+    font-size: 12px;
     line-height: 20px;
-    opacity: 0.8;
+    color: var(--text-muted);
     text-align: center;
     max-width: 800px;
     margin-bottom: 20px;
 
     span {
-      
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 600;
       a {
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: #fff;
+        letter-spacing: 0.5px;
+        color: var(--text-main);
+        text-decoration: none;
+        transition: var(--transition-smooth);
 
         &:hover {
-          opacity: 1;
-          color: var(--pink);
+          color: var(--primary);
         }
       }
-    }
-
-    @include md {
-      font-size: 10px;
-      margin-bottom: 30px;
     }
   }
 
@@ -87,26 +84,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 
     a {
-      color: #fff;
+      color: var(--text-main);
+      text-decoration: none;
 
       .icon {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
-        background-color: var(--black);
+        background-color: var(--bg-card);
+        border: 1px solid var(--glass-border);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all ease 0.3s;
-        font-size: 23px;
+        transition: var(--transition-smooth);
+        font-size: 20px;
 
         &:hover {
-          box-shadow: 0 0 0.625em var(--pink);
-          color: var(--pink);
+          background: var(--gradient-primary);
+          border-color: transparent;
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
         }
       }
     }

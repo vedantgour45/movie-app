@@ -98,21 +98,35 @@
   .carouselItems {
     display: flex;
     gap: 10px;
-    overflow-y: hidden;
+    overflow-y: visible; // Allow vertical hover lift
     margin-right: -20px;
     margin-left: -20px;
-    padding: 0 20px;
+    padding: 25px 20px; // Vertical padding for hover lift
+    margin-top: -25px; // Offset the padding
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     @include md {
       gap: 20px;
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
+      overflow: hidden; // Keep horizontal clipping but...
+      margin: -25px 0; // Negative margin to offset padding
+      padding: 25px 0; // Vertical padding for hover lift
     }
 
     .carouselItem {
       width: 125px;
       cursor: pointer;
+      flex-shrink: 0;
+      transition: var(--transition-smooth);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 8px;
 
       @include md {
         width: calc(25% - 15px);
@@ -122,19 +136,35 @@
         width: calc(20% - 16px);
       }
 
-      flex-shrink: 0;
-
       .posterBlock {
         position: relative;
         width: 100%;
         aspect-ratio: 1 / 1.5;
         background-size: cover;
         background-position: center;
-        margin-bottom: 30px;
+        margin-bottom: 12px;
         display: flex;
         align-items: flex-end;
-        justify-content: space-between;
-        padding: 10px;
+        justify-content: flex-start;
+        transition: var(--transition-smooth);
+        border-radius: 12px;
+        overflow: hidden;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            to bottom,
+            transparent 60%,
+            rgba(0, 0, 0, 0.8) 100%
+          );
+          transition: var(--transition-smooth);
+          z-index: 1;
+        }
 
         .lazy-load-image-background {
           position: absolute;
@@ -142,59 +172,72 @@
           left: 0;
           width: 100%;
           height: 100%;
-          border-radius: 12px;
-          overflow: hidden;
-
+          z-index: 0;
           img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            transition: var(--transition-smooth);
           }
         }
 
-        .circleRating {
-          width: 40px;
-          height: 40px;
-          position: relative;
-          top: 30px;
-          background-color: rgba(255, 255, 255, 0.9);
-          flex-shrink: 0;
-          @include md {
-            width: 50px;
-            height: 50px;
-          }
+        .ratingBadge {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 10;
         }
+
         .genres {
-          display: none;
-          position: relative;
-          @include md {
-            display: flex;
-            flex-flow: wrap;
-            justify-content: flex-end;
-          }
+          position: absolute;
+          bottom: 10px;
+          left: 10px;
+          z-index: 10;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          gap: 4px;
         }
       }
 
       .textBlock {
-        color: white;
+        color: var(--text-main);
         display: flex;
         flex-direction: column;
+        padding: 0 4px 10px;
 
         .title {
           font-size: 16px;
-          margin-bottom: 10px;
-          line-height: 24px;
+          margin-bottom: 4px;
+          line-height: 20px;
+          font-weight: 600;
           @include ellipsis(1);
+          transition: var(--transition-smooth);
 
           @include md {
-            font-size: 20px;
+            font-size: 18px;
           }
         }
 
         .date {
-          font-size: 14px;
-          opacity: 0.5;
+          font-size: 13px;
+          color: var(--text-muted);
+        }
+      }
+
+      &:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--primary);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+
+        .posterBlock {
+          img {
+            transform: scale(1.1);
+          }
+        }
+        .textBlock .title {
+          color: var(--primary);
         }
       }
     }
