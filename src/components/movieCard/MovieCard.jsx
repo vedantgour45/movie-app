@@ -7,6 +7,7 @@ import Img from "../lazyLoadImage/Img";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import PosterFallback from "../../assets/no-poster.png";
+import WatchlistActions from "../watchlistActions/WatchlistActions";
 
 const MovieCard = ({ data, fromSearch, mediaType }) => {
   const { url } = useSelector((state) => state.home);
@@ -27,6 +28,9 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
             <Genres data={data.genre_ids.slice(0, 2)} />
           </React.Fragment>
         )}
+        <div className="cardActions">
+          <WatchlistActions item={data} mediaType={data.media_type || mediaType} />
+        </div>
       </div>
       <div className="textBlock">
         <span className="title">{data.title || data.name}</span>

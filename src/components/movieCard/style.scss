@@ -83,6 +83,16 @@
       justify-content: flex-start;
       gap: 4px;
     }
+
+    .cardActions {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: all 0.3s ease;
+    }
   }
 
   .textBlock {
@@ -115,6 +125,11 @@
     .posterBlock {
       img {
         transform: scale(1.1);
+      }
+
+      .cardActions {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 

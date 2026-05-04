@@ -4,6 +4,7 @@ import HeroBanner from "./heroBanner/HeroBanner";
 import Trending from "./trending/Trending";
 import Popular from "./popular/Popular";
 import TopRated from "./topRated/TopRated";
+import SurpriseMe from "./surpriseMe/SurpriseMe";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <HeroBanner />
       <Trending />
       <Popular />
+      <SurpriseMe />
       <TopRated />
     </div>
   );

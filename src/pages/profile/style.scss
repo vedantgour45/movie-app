@@ -1,0 +1,150 @@
+@import "../../mixins.scss";
+
+.profilePage {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 50px;
+
+  .profileContent {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .profileHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+
+    @include md {
+      flex-direction: row;
+      text-align: left;
+      padding: 40px;
+    }
+
+    .profileImg {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--glass-border);
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .profileInfo {
+      flex: 1;
+
+      .name {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 5px;
+      }
+
+      .email {
+        font-size: 16px;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .joined {
+        font-size: 14px;
+        color: var(--text-muted);
+        opacity: 0.8;
+      }
+    }
+
+    .logoutBtn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      background: rgba(244, 63, 94, 0.1);
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+      font-family: inherit;
+
+      @include md {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+      }
+
+      &:hover {
+        background: rgba(244, 63, 94, 0.2);
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .statsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    @include md {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .statCard {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: var(--transition-smooth);
+      cursor: pointer;
+
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .count {
+        font-size: 48px;
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      .label {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+      }
+    }
+  }
+}
