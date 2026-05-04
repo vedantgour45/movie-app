@@ -12,6 +12,7 @@ import PosterFallback from "../../../assets/no-poster.png";
 import { PlayIcon } from "../PlayIcon.jsx";
 import VideoPopup from "../../../components/videoPopup/VideoPopup.jsx";
 import BackButton from "../../../components/backButton/BackButton";
+import WatchlistActions from "../../../components/watchlistActions/WatchlistActions";
 
 const DetailsBanner = ({ video, crew }) => {
   const [show, setShow] = useState(false);
@@ -79,6 +80,7 @@ const DetailsBanner = ({ video, crew }) => {
                         <PlayIcon />
                         <span className="text">Watch Trailer</span>
                       </div>
+                      <WatchlistActions item={data} mediaType={mediaType} />
                     </div>
                     <div className="overview">
                       {/* <div style={{paddingBottom: "4px" , textDecoration:"underline"}} className="heading">Original Title: {data?.original_title}</div> */}

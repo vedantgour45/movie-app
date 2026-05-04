@@ -1,0 +1,72 @@
+.themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+
+  .toggleTrack {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    transition: all 0.3s ease;
+
+    .sunIcon,
+    .moonIcon {
+      font-size: 14px;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .sunIcon {
+      color: #f59e0b;
+      opacity: 0.4;
+    }
+
+    .moonIcon {
+      color: #8b5cf6;
+      opacity: 1;
+    }
+
+    .toggleThumb {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      top: 2px;
+      right: 3px;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+    }
+  }
+
+  &.light {
+    .toggleTrack {
+      background: rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.12);
+
+      .sunIcon {
+        opacity: 1;
+      }
+
+      .moonIcon {
+        opacity: 0.4;
+      }
+
+      .toggleThumb {
+        right: calc(100% - 25px);
+        background: linear-gradient(135deg, #f59e0b, #f97316);
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+      }
+    }
+  }
+}

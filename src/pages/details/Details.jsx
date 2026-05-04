@@ -7,6 +7,7 @@ import Cast from "./cast/Cast";
 import VideosSection from "./videosSection/VideosSection";
 import Similar from "./carousels/Similar";
 import Recommendation from "./carousels/Recommendation";
+import WatchProviders from "./watchProviders/WatchProviders";
 
 const Details = () => {
   const { mediaType, id } = useParams();
@@ -22,6 +23,7 @@ const Details = () => {
     <div>
       <DetailsBanner video={trailers?.[0]} crew={credits?.crew} />
       <Cast data={credits?.cast} loading={creditsLoading} />
+      <WatchProviders mediaType={mediaType} id={id} />
       <VideosSection data={data?.results} />
       <Similar mediaType={mediaType} id={id} />
       <Recommendation mediaType={mediaType} id={id} />

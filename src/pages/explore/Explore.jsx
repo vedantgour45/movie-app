@@ -24,12 +24,51 @@ const sortbyData = [
   { value: "original_title.asc", label: "Title (A-Z)" },
 ];
 
+// Generate year options from current year down to 1950
+const currentYear = new Date().getFullYear();
+const yearData = Array.from({ length: currentYear - 1950 + 1 }, (_, i) => ({
+  value: currentYear - i,
+  label: String(currentYear - i),
+}));
+
+const ratingData = [
+  { value: 9, label: "9+ Masterpiece" },
+  { value: 8, label: "8+ Excellent" },
+  { value: 7, label: "7+ Great" },
+  { value: 6, label: "6+ Good" },
+  { value: 5, label: "5+ Average" },
+  { value: 4, label: "4+ Below Average" },
+  { value: 0, label: "All Ratings" },
+];
+
+const languageData = [
+  { value: "", label: "All Languages" },
+  { value: "en", label: "English" },
+  { value: "hi", label: "Hindi" },
+  { value: "mr", label: "Marathi" },
+  { value: "ta", label: "Tamil" },
+  { value: "te", label: "Telugu" },
+  { value: "ml", label: "Malayalam" },
+  { value: "kn", label: "Kannada" },
+  { value: "bn", label: "Bengali" },
+  { value: "ko", label: "Korean" },
+  { value: "ja", label: "Japanese" },
+  { value: "es", label: "Spanish" },
+  { value: "fr", label: "French" },
+  { value: "de", label: "German" },
+  { value: "zh", label: "Chinese" },
+];
+
 const Explore = () => {
   const [data, setData] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [loading, setLoading] = useState(false);
   const [genre, setGenre] = useState(null);
   const [sortby, setSortby] = useState(null);
+  const [year, setYear] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [language, setLanguage] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
   const { mediaType } = useParams();
 
   const { data: genresData } = useFetch(`/genre/${mediaType}/list`);
@@ -65,6 +104,9 @@ const Explore = () => {
     setPageNum(1);
     setSortby(null);
     setGenre(null);
+    setYear(null);
+    setRating(null);
+    setLanguage(null);
     fetchInitialData();
   }, [mediaType]);
 
@@ -89,6 +131,58 @@ const Explore = () => {
       }
     }
 
+    if (action.name === "year") {
+      setYear(selectedItems);
+      if (action.action !== "clear" && selectedItems) {
+        if (mediaType === "movie") {
+          filters.primary_release_year = selectedItems.value;
+        } else {
+          filters.first_air_date_year = selectedItems.value;
+        }
+      } else {
+        delete filters.primary_release_year;
+        delete filters.first_air_date_year;
+      }
+    }
+
+    if (action.name === "rating") {
+      setRating(selectedItems);
+      if (action.action !== "clear" && selectedItems) {
+        if (selectedItems.value > 0) {
+          filters["vote_average.gte"] = selectedItems.value;
+          filters["vote_count.gte"] = 50;
+        } else {
+          delete filters["vote_average.gte"];
+          delete filters["vote_count.gte"];
+        }
+      } else {
+        delete filters["vote_average.gte"];
+        delete filters["vote_count.gte"];
+      }
+    }
+
+    if (action.name === "language") {
+      setLanguage(selectedItems);
+      if (action.action !== "clear" && selectedItems && selectedItems.value) {
+        filters.with_original_language = selectedItems.value;
+      } else {
+        delete filters.with_original_language;
+      }
+    }
+
+    setPageNum(1);
+    fetchInitialData();
+  };
+
+  const activeFilterCount = [genre?.length > 0, sortby, year, rating, language?.value].filter(Boolean).length;
+
+  const clearAllFilters = () => {
+    filters = {};
+    setSortby(null);
+    setGenre(null);
+    setYear(null);
+    setRating(null);
+    setLanguage(null);
     setPageNum(1);
     fetchInitialData();
   };
@@ -100,6 +194,18 @@ const Explore = () => {
           <div className="pageTitle">
             {mediaType === "tv" ? "Explore TV Shows" : "Explore Movies"}
           </div>
+          <button
+            className="filterToggleBtn"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <span>Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="filterCount">{activeFilterCount}</span>
+            )}
+          </button>
+        </div>
+
+        <div className={`filtersPanel ${showFilters ? "visible" : ""}`}>
           <div className="filters">
             <Select
               isMulti
@@ -124,8 +230,44 @@ const Explore = () => {
               className="react-select-container sortbyDD"
               classNamePrefix="react-select"
             />
+            <Select
+              name="year"
+              value={year}
+              options={yearData}
+              onChange={onChange}
+              isClearable={true}
+              placeholder="Year"
+              className="react-select-container yearDD"
+              classNamePrefix="react-select"
+            />
+            <Select
+              name="rating"
+              value={rating}
+              options={ratingData}
+              onChange={onChange}
+              isClearable={true}
+              placeholder="Min Rating"
+              className="react-select-container ratingDD"
+              classNamePrefix="react-select"
+            />
+            <Select
+              name="language"
+              value={language}
+              options={languageData}
+              onChange={onChange}
+              isClearable={true}
+              placeholder="Language"
+              className="react-select-container languageDD"
+              classNamePrefix="react-select"
+            />
           </div>
+          {activeFilterCount > 0 && (
+            <button className="clearFiltersBtn" onClick={clearAllFilters}>
+              Clear All Filters
+            </button>
+          )}
         </div>
+
         {loading && <Spinner initial={true} />}
         {!loading && (
           <>

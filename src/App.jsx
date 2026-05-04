@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { fetchDataFromApi } from "./utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { getApiConfiguration, getGenres } from "./store/homeSlice";
+import { setUser, clearUser } from "./store/authSlice";
+import { fetchUserLists, clearLists } from "./store/watchlistSlice";
+import { auth } from "./utils/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/header/Header";
@@ -11,21 +15,39 @@ import Details from "./pages/details/Details";
 import SearchResult from "./pages/searchResult/SearchResult";
 import Explore from "./pages/explore/Explore";
 import PageNotFound from "./pages/404/PageNotFound";
+import PersonDetails from "./pages/personDetails/PersonDetails";
+import Watchlist from "./pages/watchlist/Watchlist";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
-  console.log(url);
 
   useEffect(() => {
     fetchApiConfig();
     genresCall();
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        dispatch(setUser({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        }));
+        dispatch(fetchUserLists(currentUser.uid));
+      } else {
+        dispatch(clearUser());
+        dispatch(clearLists());
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const fetchApiConfig = () => {
     fetchDataFromApi("/configuration")
       .then((res) => {
-        console.log("Results", res);
         const url = {
           backdrop: res.images.secure_base_url + "original",
           poster: res.images.secure_base_url + "original",
@@ -66,6 +88,9 @@ function App() {
         <Route path="/:mediaType/:id" element={<Details />} />
         <Route path="/search/:query" element={<SearchResult />} />
         <Route path="/explore/:mediaType" element={<Explore />} />
+        <Route path="/person/:id" element={<PersonDetails />} />
+        <Route path="/watchlist" element={<Watchlist />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

@@ -1,26 +1,13 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { fetchDataFromApi } from "../utils/api";
 
-const useFetch = (url) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setLoading("loading...");
-    setData(null);
-    setError(null);
-
-    fetchDataFromApi(url)
-      .then((res) => {
-        setLoading(false);
-        setData(res);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError("Something went wrong!");
-      });
-  }, [url]);
+const useFetch = (url, params) => {
+  const { data, isLoading: loading, error } = useQuery({
+    queryKey: [url, params],
+    queryFn: () => fetchDataFromApi(url, params),
+    enabled: !!url, // Only fetch if URL is provided
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  });
 
   return { data, loading, error };
 };
